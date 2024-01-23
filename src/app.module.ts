@@ -3,13 +3,17 @@ import { ConfigModule } from './common/config/config.module';
 import { CoursesModule } from './resources/courses/courses.module';
 import { DatabaseModule } from './common/database/database.module';
 import { UsersModule } from './resources/users/users.module';
+import { AuthModule } from './resources/auth/auth.module';
+import { ApplicationsModule } from './resources/applications/applications.module';
 
 @Module({
   imports: [
     ConfigModule,
     CoursesModule,
     DatabaseModule,
-    UsersModule
+    UsersModule,
+    AuthModule,
+    ApplicationsModule
   ],
   controllers: [],
   providers: [],

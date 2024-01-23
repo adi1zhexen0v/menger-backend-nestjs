@@ -14,10 +14,6 @@ export class UsersService {
   ) {}
   
   async create(dto: CreateUserDto) {
-    const { password } = dto;
-    const hashedPassword = await hashPassword(password);
-    dto.password = hashedPassword;
-
     return this.repository.save(dto);
   }
 
@@ -27,6 +23,10 @@ export class UsersService {
 
   findById(id: number) {
     return this.repository.findOneBy({ id });
+  }
+
+  findByEmail(email: string) {
+    return this.repository.findOneBy({ email });
   }
 
   delete(id: number) {
