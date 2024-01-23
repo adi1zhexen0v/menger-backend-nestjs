@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity({ name: 'courses' })
 export class CourseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,4 +16,7 @@ export class CourseEntity {
 
   @Column()
   imageUrl: string;
+
+  @Column({ default: true })
+  isPublic: boolean;
 }

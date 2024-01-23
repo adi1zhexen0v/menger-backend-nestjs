@@ -14,4 +14,7 @@ export class CreateCourseDto {
   
   @ApiProperty()
   imageUrl: string;
+
+  @ApiProperty()
+  isPublic: boolean;
 }
