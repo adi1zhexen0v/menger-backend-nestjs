@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
 import { v4 as uuidv4 } from 'uuid';
 
-const { GOOGLE_CLOUD_PROJECT_ID, GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_CLOUD_STORAGE_BUCKET } = process.env;
+const { GSC_PROJECT_ID, GSC_PRIVATE_KEY_ID, GSC_PRIVATE_KEY, GSC_CLIENT_EMAIL, GSC_CLIENT_ID, GCS_BUCKET_NAME } = process.env;
 
 @Injectable()
 export class GoogleCloudStorageService {
@@ -10,11 +10,19 @@ export class GoogleCloudStorageService {
   private bucketName: string;
 
   constructor() {
+    const privateKey = GSC_PRIVATE_KEY.replace(/\\n/g, '\n');
+
     this.storage = new Storage({
-      projectId: GOOGLE_CLOUD_PROJECT_ID,
-      keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
+      credentials: {
+        private_key_id: GSC_PRIVATE_KEY_ID,
+        private_key: privateKey,
+        client_email: GSC_CLIENT_EMAIL,
+        client_id: GSC_CLIENT_ID
+      },
+      projectId: GSC_PROJECT_ID,
     });
-    this.bucketName = GOOGLE_CLOUD_STORAGE_BUCKET;
+
+    this.bucketName = GCS_BUCKET_NAME;
   }
 
   async uploadFile(file: Express.Multer.File, folderName: string): Promise<string> {

@@ -22,7 +22,7 @@ export class CreateOrUpdateCourseDto {
   
   @ApiProperty({
     description: 'Price of the course in KZT',
-    example: 99.99,
+    example: 990,
     minimum: 1,
   })
   @IsNumber({}, { message: 'Price must be a number' })
