@@ -5,6 +5,7 @@ import { DatabaseModule } from './common/database/database.module';
 import { UsersModule } from './resources/users/users.module';
 import { AuthModule } from './resources/auth/auth.module';
 import { ApplicationsModule } from './resources/applications/applications.module';
+import { GoogleCloudStorageService } from './services/gsc.service';
 
 @Module({
   imports: [

@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Param, Patch, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { CoursesService } from './courses.service';
-import { CreateCourseDto } from './dto/create-course.dto';
-import { UpdateCourseDto } from './dto/update-course.dto';
+import { CreateOrUpdateCourseDto } from './dto/create-update-course.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('courses')
 @ApiTags('courses')
@@ -10,8 +10,11 @@ export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Post()
-  create(@Body() createCourseDto: CreateCourseDto) {
-    return this.coursesService.create(createCourseDto);
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  create(@UploadedFile() file: Express.Multer.File, @Body() dto: CreateOrUpdateCourseDto) {
+    dto.file = file;
+    return this.coursesService.create(dto);
   }
 
   @Get()
@@ -25,7 +28,7 @@ export class CoursesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() dto: UpdateCourseDto) {
+  update(@Param('id') id: number, @Body() dto: CreateOrUpdateCourseDto) {
     return this.coursesService.update(id, dto);
   }
 

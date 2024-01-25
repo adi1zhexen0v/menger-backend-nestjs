@@ -19,4 +19,7 @@ export class CourseEntity {
 
   @Column({ default: true })
   isPublic: boolean;
+
+  @Column({ nullable: true })
+  benefits: string;
 }

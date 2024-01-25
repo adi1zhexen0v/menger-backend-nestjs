@@ -1,19 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCourseDto } from './dto/create-course.dto';
+import { CreateOrUpdateCourseDto } from './dto/create-update-course.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CourseEntity } from './entities/course.entity';
 import { Repository } from 'typeorm';
-import { UpdateCourseDto } from './dto/update-course.dto';
+import { GoogleCloudStorageService } from 'src/services/gsc.service';
 
 @Injectable()
 export class CoursesService {
   constructor(
     @InjectRepository(CourseEntity)
-    private repository: Repository<CourseEntity>
+    private repository: Repository<CourseEntity>,
+    private googleCloudStorageService: GoogleCloudStorageService
   ) {}
 
-  create(dto: CreateCourseDto) {
-    return this.repository.save(dto);
+  async create(dto: CreateOrUpdateCourseDto) {
+    const { file, ...rest } = dto;
+    const imageUrl = await this.googleCloudStorageService.uploadFile(file, 'courses');
+
+    return this.repository.save({ ...rest, imageUrl });
   }
 
   findAll() {
@@ -24,7 +28,7 @@ export class CoursesService {
     return this.repository.findOneBy({ id });
   }
 
-  update(id: number, dto: UpdateCourseDto) {
+  update(id: number, dto: CreateOrUpdateCourseDto) {
     return this.repository.update(id, dto);
   }
 
