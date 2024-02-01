@@ -5,7 +5,7 @@ import { DatabaseModule } from './common/database/database.module';
 import { UsersModule } from './resources/users/users.module';
 import { AuthModule } from './resources/auth/auth.module';
 import { ApplicationsModule } from './resources/applications/applications.module';
-import { GoogleCloudStorageService } from './services/gsc.service';
+import { ActivationCodeModule } from './resources/activation-code/activation-code.module';
 
 @Module({
   imports: [
@@ -14,7 +14,8 @@ import { GoogleCloudStorageService } from './services/gsc.service';
     DatabaseModule,
     UsersModule,
     AuthModule,
-    ApplicationsModule
+    ApplicationsModule,
+    ActivationCodeModule
   ],
   controllers: [],
   providers: [],

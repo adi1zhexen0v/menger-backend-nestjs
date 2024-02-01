@@ -1,7 +1,8 @@
-import { CanActivate, ExecutionContext, UnauthorizedException } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Observable } from "rxjs";
 
+@Injectable()
 export class StudentGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
@@ -17,8 +18,12 @@ export class StudentGuard implements CanActivate {
       throw new UnauthorizedException('Token is not valid');
     }
 
+    console.log(token);
+
     try {
+      console.log('try');
       const user = this.jwtService.verify(token);
+      console.log(user);
       req.user = user;
       return true;
     } catch (error) {

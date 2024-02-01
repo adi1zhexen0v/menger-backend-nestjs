@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { setupSwagger } from './common/swagger/swagger.config';
+import 'reflect-metadata';
 
 const { PORT } = process.env;
 

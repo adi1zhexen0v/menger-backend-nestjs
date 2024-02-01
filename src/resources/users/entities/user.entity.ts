@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn  } from "typeorm";
+import { ActivationCodeEntity } from "src/resources/activation-code/entities/activation-code.entity";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToOne  } from "typeorm";
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -26,6 +27,12 @@ export class UserEntity {
   @Column({ default: 0 })
   points?: number;
 
+  @Column({ default: false })
+  isActivated: boolean; 
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
+
+  @OneToOne(() => ActivationCodeEntity, (activationCode) => activationCode.user)
+  activationCode: ActivationCodeEntity;
 }

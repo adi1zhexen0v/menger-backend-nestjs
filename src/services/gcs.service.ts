@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
 import { v4 as uuidv4 } from 'uuid';
 
-const { GSC_PROJECT_ID, GSC_PRIVATE_KEY_ID, GSC_PRIVATE_KEY, GSC_CLIENT_EMAIL, GSC_CLIENT_ID, GCS_BUCKET_NAME } = process.env;
+const { GCS_PROJECT_ID, GCS_PRIVATE_KEY_ID, GCS_PRIVATE_KEY, GCS_CLIENT_EMAIL, GCS_CLIENT_ID, GCS_BUCKET_NAME } = process.env;
 
 @Injectable()
 export class GoogleCloudStorageService {
@@ -10,16 +10,16 @@ export class GoogleCloudStorageService {
   private bucketName: string;
 
   constructor() {
-    const privateKey = GSC_PRIVATE_KEY.replace(/\\n/g, '\n');
+    const privateKey = GCS_PRIVATE_KEY.replace(/\\n/g, '\n');
 
     this.storage = new Storage({
       credentials: {
-        private_key_id: GSC_PRIVATE_KEY_ID,
+        private_key_id: GCS_PRIVATE_KEY_ID,
         private_key: privateKey,
-        client_email: GSC_CLIENT_EMAIL,
-        client_id: GSC_CLIENT_ID
+        client_email: GCS_CLIENT_EMAIL,
+        client_id: GCS_CLIENT_ID
       },
-      projectId: GSC_PROJECT_ID,
+      projectId: GCS_PROJECT_ID,
     });
 
     this.bucketName = GCS_BUCKET_NAME;

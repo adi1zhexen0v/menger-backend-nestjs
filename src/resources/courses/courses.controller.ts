@@ -43,4 +43,9 @@ export class CoursesController {
   delete(@Param('id') id: number) {
     return this.coursesService.delete(id);
   }
+
+  @Get("/public") 
+  findPublicCourses() {
+    return this.coursesService.findPublicCourses();
+  }
 }

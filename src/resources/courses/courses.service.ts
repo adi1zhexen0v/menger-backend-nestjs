@@ -3,7 +3,7 @@ import { CreateOrUpdateCourseDto } from './dto/create-update-course.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CourseEntity } from './entities/course.entity';
 import { Repository } from 'typeorm';
-import { GoogleCloudStorageService } from 'src/services/gsc.service';
+import { GoogleCloudStorageService } from 'src/services/gcs.service';
 
 @Injectable()
 export class CoursesService {
@@ -35,4 +35,17 @@ export class CoursesService {
   delete(id: number) {
     return this.repository.delete({ id });
   }
+
+  findPublicCourses() {
+    return this.repository.find({
+      where: {
+        isPublic: true,
+      },
+      order: {
+        id: "ASC", 
+      },
+      take: 3,
+    });
+  }
+  
 }
