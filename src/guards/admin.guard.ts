@@ -21,6 +21,7 @@ export class AdminGuard implements CanActivate {
 
     try {
       const user = this.jwtService.verify(token);
+      console.log(user);
       if (user.type !== UserTypes.ADMIN) {
         throw new UnauthorizedException('Access Denied: You are not admin');
       }

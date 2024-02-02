@@ -21,9 +21,7 @@ export class StudentGuard implements CanActivate {
     console.log(token);
 
     try {
-      console.log('try');
       const user = this.jwtService.verify(token);
-      console.log(user);
       req.user = user;
       return true;
     } catch (error) {

@@ -6,8 +6,12 @@ import 'reflect-metadata';
 const { PORT } = process.env;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {cors: false});
-  app.enableCors({ credentials: true, origin: true });
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: true,
+      credentials: true,
+    },
+  });
   setupSwagger(app);
   await app.listen(PORT || 4000);
 }
