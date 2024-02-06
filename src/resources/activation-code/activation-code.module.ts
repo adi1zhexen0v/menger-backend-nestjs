@@ -7,6 +7,6 @@ import { UserEntity } from '../users/entities/user.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, ActivationCodeEntity])],
   providers: [ActivationCodeService],
-  exports: [ActivationCodeService]
+  exports: [ActivationCodeService],
 })
 export class ActivationCodeModule {}

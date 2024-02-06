@@ -32,7 +32,9 @@ export class CreateUserDto {
   })
   @IsNotEmpty({ message: 'Password is required' })
   @IsString({ message: 'Password must be a string' })
-  @Length(6, 20, { message: 'Password must be between 6 and 20 characters long' })
+  @Length(6, 20, {
+    message: 'Password must be between 6 and 20 characters long',
+  })
   password: string;
 
   @ApiProperty({

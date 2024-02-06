@@ -2,7 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
 import { v4 as uuidv4 } from 'uuid';
 
-const { GCS_PROJECT_ID, GCS_PRIVATE_KEY_ID, GCS_PRIVATE_KEY, GCS_CLIENT_EMAIL, GCS_CLIENT_ID, GCS_BUCKET_NAME } = process.env;
+const {
+  GCS_PROJECT_ID,
+  GCS_PRIVATE_KEY_ID,
+  GCS_PRIVATE_KEY,
+  GCS_CLIENT_EMAIL,
+  GCS_CLIENT_ID,
+  GCS_BUCKET_NAME,
+} = process.env;
 
 @Injectable()
 export class GoogleCloudStorageService {
@@ -17,7 +24,7 @@ export class GoogleCloudStorageService {
         private_key_id: GCS_PRIVATE_KEY_ID,
         private_key: privateKey,
         client_email: GCS_CLIENT_EMAIL,
-        client_id: GCS_CLIENT_ID
+        client_id: GCS_CLIENT_ID,
       },
       projectId: GCS_PROJECT_ID,
     });
@@ -25,7 +32,10 @@ export class GoogleCloudStorageService {
     this.bucketName = GCS_BUCKET_NAME;
   }
 
-  async uploadFile(file: Express.Multer.File, folderName: string): Promise<string> {
+  async uploadFile(
+    file: Express.Multer.File,
+    folderName: string,
+  ): Promise<string> {
     const bucket = this.storage.bucket(this.bucketName);
   
     const fileExtension = file.originalname.split('.').pop();
@@ -34,11 +44,14 @@ export class GoogleCloudStorageService {
     const blobStream = blob.createWriteStream();
   
     await new Promise<void>((resolve, reject) => {
-      blobStream.on('error', err => reject(err));
-      blobStream.on('finish', resolve);
+      blobStream.on('error', (err) => reject(err));
+      blobStream.on('finish', async () => {
+        await blob.makePublic();
+        resolve();
+      });
       blobStream.end(file.buffer);
     });
-  
+
     return `https://storage.googleapis.com/${bucket.name}/${encodeURIComponent(fileName)}`;
-  }
+  }  
 }

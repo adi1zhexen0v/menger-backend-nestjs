@@ -1,5 +1,11 @@
-import { ActivationCodeEntity } from "src/resources/activation-code/entities/activation-code.entity";
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToOne  } from "typeorm";
+import { ActivationCodeEntity } from 'src/resources/activation-code/entities/activation-code.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  OneToOne,
+} from 'typeorm';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -19,7 +25,7 @@ export class UserEntity {
   password: string;
 
   @Column()
-  type: "student" | "manager" | "admin";
+  type: 'student' | 'manager' | 'admin';
 
   @Column({ nullable: true })
   imageUrl?: string;
@@ -28,7 +34,7 @@ export class UserEntity {
   points?: number;
 
   @Column({ default: false })
-  isActivated: boolean; 
+  isActivated: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

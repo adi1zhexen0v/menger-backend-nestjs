@@ -8,9 +8,8 @@ import { Repository } from 'typeorm';
 export class ApplicationsService {
   constructor(
     @InjectRepository(ApplicationEntity)
-    private repository: Repository<ApplicationEntity>
+    private repository: Repository<ApplicationEntity>,
   ) {}
-
 
   create(dto: CreateApplicationDto) {
     return this.repository.save(dto);

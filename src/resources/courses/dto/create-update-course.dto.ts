@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNotEmpty, IsNumber, IsString, Length, Min } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Length,
+  Min,
+} from 'class-validator';
 
 export class CreateOrUpdateCourseDto {
   @ApiProperty({
@@ -8,18 +15,22 @@ export class CreateOrUpdateCourseDto {
   })
   @IsNotEmpty({ message: 'Title is required' })
   @IsString({ message: 'Title must be a string' })
-  @Length(3, 100, { message: 'Title must be between 3 and 100 characters long' })
+  @Length(3, 100, {
+    message: 'Title must be between 3 and 100 characters long',
+  })
   title: string;
-  
+
   @ApiProperty({
     description: 'Detailed description of the course',
     example: 'This course provides an in-depth introduction to NestJS ...',
   })
   @IsNotEmpty({ message: 'Description is required' })
   @IsString({ message: 'Description must be a string' })
-  @Length(10, 500, { message: 'Description must be between 10 and 500 characters long' })
+  @Length(10, 500, {
+    message: 'Description must be between 10 and 500 characters long',
+  })
   description: string;
-  
+
   @ApiProperty({
     description: 'Price of the course in KZT',
     example: 990,

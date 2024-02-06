@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ActivationCodeEntity } from './entities/activation-code.entity';
@@ -7,7 +11,7 @@ import { ActivationCodeEntity } from './entities/activation-code.entity';
 export class ActivationCodeService {
   constructor(
     @InjectRepository(ActivationCodeEntity)
-    private repository: Repository<ActivationCodeEntity>
+    private repository: Repository<ActivationCodeEntity>,
   ) {}
 
   async validateCode(userId: number, code: string): Promise<boolean> {
@@ -34,11 +38,11 @@ export class ActivationCodeService {
     return this.repository.save({
       userId,
       code,
-      expiresIn: new Date(Date.now() + 15 * 60000)
+      expiresIn: new Date(Date.now() + 15 * 60000),
     });
   }
 
   delete(userId: number) {
-    return this.repository.delete({userId});
+    return this.repository.delete({ userId });
   }
 }

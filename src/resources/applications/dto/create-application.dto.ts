@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString, IsDate } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsString,
+  IsDate,
+} from 'class-validator';
 
 export class CreateApplicationDto {
   @ApiProperty({
@@ -25,7 +31,7 @@ export class CreateApplicationDto {
   @IsNotEmpty({ message: 'Email is required' })
   @IsEmail({}, { message: 'Invalid email format' })
   email: string;
-  
+
   @ApiProperty({
     description: 'Contact phone number of the applicant',
     example: '+1234567890',
@@ -33,7 +39,7 @@ export class CreateApplicationDto {
   @IsNotEmpty({ message: 'Phone number is required' })
   @IsPhoneNumber(null, { message: 'Invalid phone number' }) // 'null' allows any country format
   phoneNumber: string;
-  
+
   @ApiProperty({
     description: 'Date of the application',
     example: '2024-01-25T09:00:00.000Z',

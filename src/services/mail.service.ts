@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
+import * as ejs from 'ejs';
+import * as path from 'path';
 
 const { NODEMAILER_EMAIL, NODEMAILER_PASSWORD } = process.env;
 
@@ -17,13 +19,18 @@ export class MailService {
     });
   }
 
-  async sendActivationCode(to: string, code: string) {
+  async sendActivationCode(to: string, code: string, name: string) {
+    const templatePath = path.join(
+      __dirname,
+      '../templates/activationCode.ejs'
+    );
+    const html = await ejs.renderFile(templatePath, { name, code });
+
     const mailOptions = {
       from: `"Menger" <${NODEMAILER_EMAIL}>`,
       to: to,
       subject: 'Сіздің растау кодыңыз',
-      text: code,
-      html: `<h1>${code}</h1>`, 
+      html,
     };
 
     return this.transporter.sendMail(mailOptions);

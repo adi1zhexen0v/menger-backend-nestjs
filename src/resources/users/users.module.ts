@@ -9,6 +9,6 @@ import { ActivationCodeEntity } from '../activation-code/entities/activation-cod
   controllers: [UsersController],
   providers: [UsersService],
   imports: [TypeOrmModule.forFeature([UserEntity, ActivationCodeEntity])],
-  exports: [UsersService]
+  exports: [UsersService],
 })
 export class UsersModule {}

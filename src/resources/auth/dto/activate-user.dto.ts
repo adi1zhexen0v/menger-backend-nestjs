@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString, Length } from 'class-validator';
 export class ActivateUserDto {
   @ApiProperty({
     description: 'Activation code for the user account',
-    example: '123456'
+    example: '123456',
   })
   @IsNotEmpty({ message: 'Activation code is required' })
   @IsString({ message: 'Activation code must be a string' })

@@ -9,9 +9,9 @@ import { Repository } from 'typeorm';
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
-    private repository: Repository<UserEntity>
+    private repository: Repository<UserEntity>,
   ) {}
-  
+
   async create(dto: CreateUserDto) {
     return this.repository.save(dto);
   }

@@ -10,6 +10,9 @@ import { jwtConfig } from 'src/common/jwt/jwt.config';
 @Module({
   controllers: [CoursesController],
   providers: [CoursesService, GoogleCloudStorageService],
-  imports: [TypeOrmModule.forFeature([CourseEntity]), JwtModule.register(jwtConfig)]
+  imports: [
+    TypeOrmModule.forFeature([CourseEntity]),
+    JwtModule.register(jwtConfig),
+  ],
 })
 export class CoursesModule {}

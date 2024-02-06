@@ -8,13 +8,9 @@ import { MailService } from '../../services/mail.service';
 import { jwtConfig } from 'src/common/jwt/jwt.config';
 
 @Module({
-  imports: [
-    UsersModule,
-    ActivationCodeModule,
-    JwtModule.register(jwtConfig),
-  ],
+  imports: [UsersModule, ActivationCodeModule, JwtModule.register(jwtConfig)],
   controllers: [AuthController],
   providers: [AuthService, MailService],
-  exports: [AuthService]
+  exports: [AuthService],
 })
 export class AuthModule {}

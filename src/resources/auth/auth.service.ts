@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../users/dto/create-user.dto';
@@ -13,7 +18,7 @@ export class AuthService {
     private usersService: UsersService,
     private activationCodeService: ActivationCodeService,
     private mailService: MailService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
   async register(dto: CreateUserDto) {
@@ -24,19 +29,26 @@ export class AuthService {
     }
 
     const hashedPassword = await hashPassword(password);
-    const user = await this.usersService.create({ ...dto, password: hashedPassword });
+    const user = await this.usersService.create({
+      ...dto,
+      password: hashedPassword,
+    });
     const activationCode = await this.activationCodeService.create(user.id);
 
-    await this.mailService.sendActivationCode(user.email, activationCode.code);
+    await this.mailService.sendActivationCode(
+      user.email,
+      activationCode.code,
+      `${user.lastName} ${user.firstName}`,
+    );
 
     const token = this.jwtService.sign({ id: user.id, type: user.type });
-    return { user: user, token }; 
+    return { user: user, token };
   }
 
   async login(dto: LoginUserDto) {
     const { email, password } = dto;
     const user = await this.usersService.findByEmail(email);
-    if (!user || !await isValidPassword(password, user.password)) {
+    if (!user || !(await isValidPassword(password, user.password))) {
       throw new UnauthorizedException('Email or password incorrect');
     }
 
@@ -46,16 +58,25 @@ export class AuthService {
 
   async activateUser(userId: number, code: string) {
     try {
-      const codeIsValid = await this.activationCodeService.validateCode(userId, code);
+      const codeIsValid = await this.activationCodeService.validateCode(
+        userId,
+        code,
+      );
       if (!codeIsValid) {
-        throw new HttpException('Invalid activation code.', HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          'Invalid activation code.',
+          HttpStatus.BAD_REQUEST,
+        );
       }
 
       await this.activationCodeService.delete(userId);
       const user = await this.usersService.activateUser(userId);
       return user;
     } catch (error) {
-      throw new HttpException('Failed to activate account.', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Failed to activate account.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

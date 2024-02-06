@@ -5,7 +5,7 @@ export class UpdateUserDto {
   @ApiProperty({
     description: 'First name of the user',
     example: 'John',
-    required: false
+    required: false,
   })
   @IsOptional()
   @IsString({ message: 'First name must be a string' })
@@ -14,7 +14,7 @@ export class UpdateUserDto {
   @ApiProperty({
     description: 'Last name of the user',
     example: 'Doe',
-    required: false
+    required: false,
   })
   @IsOptional()
   @IsString({ message: 'Last name must be a string' })

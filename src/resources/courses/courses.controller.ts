@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Delete,
+  UseInterceptors,
+  UploadedFile,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { CoursesService } from './courses.service';
 import { CreateOrUpdateCourseDto } from './dto/create-update-course.dto';
@@ -15,7 +26,10 @@ export class CoursesController {
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
-  create(@UploadedFile() file: Express.Multer.File, @Body() dto: CreateOrUpdateCourseDto) {
+  create(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() dto: CreateOrUpdateCourseDto,
+  ) {
     dto.file = file;
     return this.coursesService.create(dto);
   }
@@ -25,7 +39,7 @@ export class CoursesController {
     return this.coursesService.findAll();
   }
 
-  @Get(':id') 
+  @Get(':id')
   findById(@Param('id') id: number) {
     return this.coursesService.findById(+id);
   }
@@ -36,7 +50,7 @@ export class CoursesController {
   update(@Param('id') id: number, @Body() dto: CreateOrUpdateCourseDto) {
     return this.coursesService.update(id, dto);
   }
-  
+
   @ApiBearerAuth()
   @UseGuards(AdminGuard)
   @Delete(':id')
@@ -44,7 +58,7 @@ export class CoursesController {
     return this.coursesService.delete(id);
   }
 
-  @Get("/public") 
+  @Get('/public')
   findPublicCourses() {
     return this.coursesService.findPublicCourses();
   }

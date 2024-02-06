@@ -15,7 +15,7 @@ import { ActivationCodeModule } from './resources/activation-code/activation-cod
     UsersModule,
     AuthModule,
     ApplicationsModule,
-    ActivationCodeModule
+    ActivationCodeModule,
   ],
   controllers: [],
   providers: [],

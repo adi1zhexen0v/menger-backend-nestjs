@@ -9,6 +9,9 @@ import { jwtConfig } from 'src/common/jwt/jwt.config';
 @Module({
   controllers: [ApplicationsController],
   providers: [ApplicationsService],
-  imports: [TypeOrmModule.forFeature([ApplicationEntity]), JwtModule.register(jwtConfig)]
+  imports: [
+    TypeOrmModule.forFeature([ApplicationEntity]),
+    JwtModule.register(jwtConfig),
+  ],
 })
 export class ApplicationsModule {}

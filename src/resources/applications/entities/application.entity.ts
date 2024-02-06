@@ -1,4 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'applications' })
 export class ApplicationEntity {
@@ -13,10 +18,10 @@ export class ApplicationEntity {
 
   @Column()
   email: string;
-  
+
   @Column()
   phoneNumber: string;
-  
+
   @Column({ type: 'timestamp' })
   date: Date;
 

@@ -27,6 +27,5 @@ export class AuthController {
   @Post('/activate')
   activate(@GetUser() user, @Body() dto: ActivateUserDto) {
     return this.authService.activateUser(user.id, dto.activationCode);
-
   }
 }
