@@ -4,16 +4,23 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
     private repository: Repository<UserEntity>,
-  ) {}
+    private jwtService: JwtService
+  ) { }
 
-  async create(dto: CreateUserDto) {
+  create(dto: CreateUserDto) {
     return this.repository.save(dto);
+  }
+
+  getMe(token: string) {
+    const decoded = this.jwtService.decode(token);
+    return this.repository.findOne({ where: { id: decoded.id } });
   }
 
   activateUser(id: number) {

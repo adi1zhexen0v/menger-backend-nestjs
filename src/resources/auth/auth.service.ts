@@ -19,7 +19,7 @@ export class AuthService {
     private activationCodeService: ActivationCodeService,
     private mailService: MailService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async register(dto: CreateUserDto) {
     const { email, password } = dto;

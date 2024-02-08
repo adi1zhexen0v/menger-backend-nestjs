@@ -11,11 +11,18 @@ import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { StudentGuard } from 'src/guards/student.guard';
+import { JwtToken } from 'src/common/decorators/jwt-token.decorator';
 
 @Controller('users')
 @ApiTags('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @ApiBearerAuth()
+  @Get()
+  getMe(@JwtToken() token: string) {
+    return this.usersService.getMe(token);
+  }
 
   @ApiBearerAuth()
   @UseGuards(StudentGuard)
