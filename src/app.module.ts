@@ -6,6 +6,7 @@ import { UsersModule } from './resources/users/users.module';
 import { AuthModule } from './resources/auth/auth.module';
 import { ApplicationsModule } from './resources/applications/applications.module';
 import { ActivationCodeModule } from './resources/activation-code/activation-code.module';
+import { FeedbackModule } from './resources/feedback/feedback.module';
 
 @Module({
   imports: [
@@ -16,8 +17,8 @@ import { ActivationCodeModule } from './resources/activation-code/activation-cod
     AuthModule,
     ApplicationsModule,
     ActivationCodeModule,
+    FeedbackModule,
   ],
   controllers: [],
-  providers: [],
 })
 export class AppModule {}
