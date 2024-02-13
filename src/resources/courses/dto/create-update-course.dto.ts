@@ -8,7 +8,8 @@ import {
   Min,
 } from 'class-validator';
 
-export class CreateOrUpdateCourseDto {
+export class 
+CreateOrUpdateCourseDto {
   @ApiProperty({
     description: 'The title of the course',
     example: 'Introduction to NestJS',
@@ -61,4 +62,6 @@ export class CreateOrUpdateCourseDto {
   })
   @IsString({ message: 'Benefits must be a string' })
   benefits: string;
+
+  organizationId?: number;
 }

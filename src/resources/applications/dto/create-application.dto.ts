@@ -4,7 +4,6 @@ import {
   IsNotEmpty,
   IsPhoneNumber,
   IsString,
-  IsDate,
 } from 'class-validator';
 
 export class CreateApplicationDto {
@@ -41,10 +40,11 @@ export class CreateApplicationDto {
   phoneNumber: string;
 
   @ApiProperty({
-    description: 'Date of the application',
-    example: '2024-01-25T09:00:00.000Z',
+    description: 'Text of the application',
+    example: 'Lorem ipsum...',
   })
-  @IsNotEmpty({ message: 'Date is required' })
-  @IsDate({ message: 'Invalid date format' })
-  date: Date;
+  @IsNotEmpty({ message: 'Text is required' })
+  text: string;
+
+  isAccepted: boolean;
 }

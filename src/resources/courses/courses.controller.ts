@@ -15,11 +15,12 @@ import { CoursesService } from './courses.service';
 import { CreateOrUpdateCourseDto } from './dto/create-update-course.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AdminGuard } from 'src/guards/admin.guard';
+import { ensureBoolean } from 'src/utils/utils';
 
 @Controller('courses')
 @ApiTags('courses')
 export class CoursesController {
-  constructor(private readonly coursesService: CoursesService) {}
+  constructor(private readonly coursesService: CoursesService) { }
 
   @ApiBearerAuth()
   @UseGuards(AdminGuard)
@@ -31,12 +32,23 @@ export class CoursesController {
     @Body() dto: CreateOrUpdateCourseDto,
   ) {
     dto.file = file;
+    dto.isPublic = ensureBoolean(dto.isPublic);
     return this.coursesService.create(dto);
   }
 
-  @Get()
-  findAll() {
-    return this.coursesService.findAll();
+  @Get('/popular')
+  findPopularCourses() {
+    return this.coursesService.findPopularCourses();
+  }
+
+  @Get('/public')
+  findPublicCourses() {
+    return this.coursesService.findPublicCourses();
+  }
+
+  @Get('/private')
+  findPrivateCourses() {
+    return this.coursesService.findPrivateCourses();
   }
 
   @Get(':id')
@@ -56,10 +68,5 @@ export class CoursesController {
   @Delete(':id')
   delete(@Param('id') id: number) {
     return this.coursesService.delete(id);
-  }
-
-  @Get('/public')
-  findPublicCourses() {
-    return this.coursesService.findPublicCourses();
   }
 }

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { OrganizationEntity } from 'src/resources/organizations/entities/organization.entity';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'courses' })
 export class CourseEntity {
@@ -21,5 +22,11 @@ export class CourseEntity {
   isPublic: boolean;
 
   @Column({ nullable: true })
+  organizationId: number;
+
+  @Column({ nullable: true })
   benefits: string;
+
+  @OneToOne(() => OrganizationEntity, organization => organization.course)
+  organization: OrganizationEntity;
 }

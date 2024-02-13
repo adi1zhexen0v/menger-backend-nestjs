@@ -11,7 +11,7 @@ export class CoursesService {
     @InjectRepository(CourseEntity)
     private repository: Repository<CourseEntity>,
     private googleCloudStorageService: GoogleCloudStorageService,
-  ) {}
+  ) { }
 
   async create(dto: CreateOrUpdateCourseDto) {
     const { file, ...rest } = dto;
@@ -23,9 +23,6 @@ export class CoursesService {
     return this.repository.save({ ...rest, imageUrl });
   }
 
-  findAll() {
-    return this.repository.find();
-  }
 
   findById(id: number) {
     return this.repository.findOneBy({ id });
@@ -39,7 +36,7 @@ export class CoursesService {
     return this.repository.delete({ id });
   }
 
-  findPublicCourses() {
+  findPopularCourses() {
     return this.repository.find({
       where: {
         isPublic: true,
@@ -48,6 +45,28 @@ export class CoursesService {
         id: 'ASC',
       },
       take: 3,
+    });
+  }
+
+  findPublicCourses() {
+    return this.repository.find({
+      where: {
+        isPublic: true,
+      },
+      order: {
+        id: 'DESC',
+      }
+    });
+  }
+
+  findPrivateCourses() {
+    return this.repository.find({
+      where: {
+        isPublic: false,
+      },
+      order: {
+        id: 'DESC',
+      }
     });
   }
 }

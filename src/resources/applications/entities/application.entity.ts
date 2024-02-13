@@ -22,8 +22,11 @@ export class ApplicationEntity {
   @Column()
   phoneNumber: string;
 
-  @Column({ type: 'timestamp' })
-  date: Date;
+  @Column()
+  text: string;
+
+  @Column()
+  isAccepted: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

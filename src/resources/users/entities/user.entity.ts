@@ -1,10 +1,12 @@
 import { ActivationCodeEntity } from 'src/resources/activation-code/entities/activation-code.entity';
+import { OrganizationEntity } from 'src/resources/organizations/entities/organization.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   OneToOne,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity({ name: 'users' })
@@ -36,9 +38,15 @@ export class UserEntity {
   @Column({ default: false })
   isActivated: boolean;
 
+  @Column({ nullable: true })
+  organizationId: number;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
   @OneToOne(() => ActivationCodeEntity, (activationCode) => activationCode.user)
   activationCode: ActivationCodeEntity;
+
+  @ManyToOne(() => OrganizationEntity, organization => organization.users)
+  organization: OrganizationEntity;
 }

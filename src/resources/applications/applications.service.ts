@@ -9,10 +9,14 @@ export class ApplicationsService {
   constructor(
     @InjectRepository(ApplicationEntity)
     private repository: Repository<ApplicationEntity>,
-  ) {}
+  ) { }
 
   create(dto: CreateApplicationDto) {
     return this.repository.save(dto);
+  }
+
+  acceptApplication(id: number) {
+    return this.repository.update(id, { isAccepted: true });
   }
 
   findAll() {

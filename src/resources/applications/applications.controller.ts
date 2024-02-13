@@ -4,19 +4,18 @@ import {
   Post,
   Body,
   Patch,
-  Param,
-  Delete,
   UseGuards,
 } from '@nestjs/common';
 import { ApplicationsService } from './applications.service';
 import { CreateApplicationDto } from './dto/create-application.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/guards/admin.guard';
+import { AcceptApplicationDto } from './dto/accept-application.dto';
 
 @Controller('applications')
 @ApiTags('applications')
 export class ApplicationsController {
-  constructor(private readonly applicationsService: ApplicationsService) {}
+  constructor(private readonly applicationsService: ApplicationsService) { }
 
   @Post()
   create(@Body() dto: CreateApplicationDto) {
@@ -28,5 +27,12 @@ export class ApplicationsController {
   @Get()
   findAll() {
     return this.applicationsService.findAll();
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AdminGuard)
+  @Patch()
+  acceptApplication(@Body() dto: AcceptApplicationDto) {
+    return this.applicationsService.acceptApplication(dto.id);
   }
 }

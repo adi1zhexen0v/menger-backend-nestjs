@@ -4,11 +4,14 @@ import { UsersController } from './users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { ActivationCodeEntity } from '../activation-code/entities/activation-code.entity';
+import { OrganizationEntity } from '../organizations/entities/organization.entity';
+import { MailService } from 'src/services/mail.service';
+import { OrganizationsModule } from '../organizations/organizations.module';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService],
-  imports: [TypeOrmModule.forFeature([UserEntity, ActivationCodeEntity])],
+  providers: [UsersService, MailService],
+  imports: [TypeOrmModule.forFeature([UserEntity, ActivationCodeEntity, OrganizationEntity]), OrganizationsModule],
   exports: [UsersService],
 })
-export class UsersModule {}
+export class UsersModule { }

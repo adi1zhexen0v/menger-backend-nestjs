@@ -4,6 +4,7 @@ import { ActivationCodeEntity } from 'src/resources/activation-code/entities/act
 import { ApplicationEntity } from 'src/resources/applications/entities/application.entity';
 import { CourseEntity } from 'src/resources/courses/entities/course.entity';
 import { FeedbackEntity } from 'src/resources/feedback/entities/feedback.entity';
+import { OrganizationEntity } from 'src/resources/organizations/entities/organization.entity';
 import { UserEntity } from 'src/resources/users/entities/user.entity';
 
 const { DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_NAME } = process.env;
@@ -22,7 +23,8 @@ const { DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_NAME } = process.env;
         UserEntity,
         ApplicationEntity,
         ActivationCodeEntity,
-        FeedbackEntity
+        FeedbackEntity,
+        OrganizationEntity
       ],
       synchronize: true,
     }),

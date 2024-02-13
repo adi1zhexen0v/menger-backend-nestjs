@@ -5,12 +5,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
+import { CreateUserWithOrganizationDto } from './dto/create-user-with-organization.dto';
+import { OrganizationsService } from '../organizations/organizations.service';
+import { MailService } from 'src/services/mail.service';
+import { hashPassword } from 'src/services/bcrypt';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
     private repository: Repository<UserEntity>,
+    private organizationsService: OrganizationsService,
+    private mailService: MailService,
     private jwtService: JwtService
   ) { }
 
@@ -41,5 +47,18 @@ export class UsersService {
 
   delete(id: number) {
     return this.repository.delete({ id });
+  }
+
+  async createUserWithOrganization(dto: CreateUserWithOrganizationDto) {
+    const organization = await this.organizationsService.findOne(dto.organizationId);
+    const { password } = dto;
+    const hashedPassword = await hashPassword(password);
+    const user = await this.repository.save({
+      ...dto,
+      password: hashedPassword,
+    });
+
+    await this.mailService.sendUserCredentials(user.email, `${user.lastName} ${user.firstName}`, organization.name, password);
+    return user;
   }
 }
