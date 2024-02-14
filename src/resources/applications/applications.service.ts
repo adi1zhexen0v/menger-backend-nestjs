@@ -22,4 +22,8 @@ export class ApplicationsService {
   findAll() {
     return this.repository.find();
   }
+
+  delete(id: number) {
+    return this.repository.delete({ id });
+  }
 }

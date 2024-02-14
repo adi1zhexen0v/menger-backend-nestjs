@@ -5,6 +5,7 @@ import {
   Body,
   Patch,
   UseGuards,
+  Delete,
 } from '@nestjs/common';
 import { ApplicationsService } from './applications.service';
 import { CreateApplicationDto } from './dto/create-application.dto';
@@ -34,5 +35,12 @@ export class ApplicationsController {
   @Patch()
   acceptApplication(@Body() dto: AcceptApplicationDto) {
     return this.applicationsService.acceptApplication(dto.id);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AdminGuard)
+  @Delete()
+  deleteApplication(@Body() dto: AcceptApplicationDto) {
+    return this.applicationsService.delete(dto.id);
   }
 }
