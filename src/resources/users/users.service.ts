@@ -45,6 +45,10 @@ export class UsersService {
     return this.repository.findOneBy({ email });
   }
 
+  findUsersByOrganization(id: number) {
+    return this.repository.find({ where: { organizationId: id } })
+  }
+
   delete(id: number) {
     return this.repository.delete({ id });
   }

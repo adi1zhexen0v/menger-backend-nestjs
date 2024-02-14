@@ -14,6 +14,9 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { StudentGuard } from 'src/guards/student.guard';
 import { JwtToken } from 'src/common/decorators/jwt-token.decorator';
 import { CreateUserWithOrganizationDto } from './dto/create-user-with-organization.dto';
+import { Admin } from 'typeorm';
+import { AdminGuard } from 'src/guards/admin.guard';
+import { ManagerGuard } from 'src/guards/manager.guard';
 
 @Controller('users')
 @ApiTags('users')
@@ -50,5 +53,12 @@ export class UsersController {
   @Post('/organization')
   createUserWithOrganization(@Body() dto: CreateUserWithOrganizationDto) {
     return this.usersService.createUserWithOrganization(dto);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(ManagerGuard)
+  @Get('/organization/:id')
+  findUsersByOrganization(@Param(':id') id: number) {
+    return this.usersService.findUsersByOrganization(id);
   }
 }
