@@ -6,6 +6,7 @@ import {
   Patch,
   UseGuards,
   Delete,
+  Param,
 } from '@nestjs/common';
 import { ApplicationsService } from './applications.service';
 import { CreateApplicationDto } from './dto/create-application.dto';
@@ -39,8 +40,8 @@ export class ApplicationsController {
 
   @ApiBearerAuth()
   @UseGuards(AdminGuard)
-  @Delete()
-  deleteApplication(@Body() dto: AcceptApplicationDto) {
-    return this.applicationsService.delete(dto.id);
+  @Delete(":id")
+  deleteApplication(@Param('id') id: number) {
+    return this.applicationsService.delete(id);
   }
 }
