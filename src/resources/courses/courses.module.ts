@@ -7,13 +7,14 @@ import { GoogleCloudStorageService } from 'src/services/gcs.service';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConfig } from 'src/common/jwt/jwt.config';
 import { OrganizationEntity } from '../organizations/entities/organization.entity';
+import { LevelEntity } from '../level/entities/level.entity';
 
 @Module({
   controllers: [CoursesController],
   providers: [CoursesService, GoogleCloudStorageService],
   imports: [
-    TypeOrmModule.forFeature([CourseEntity, OrganizationEntity]),
+    TypeOrmModule.forFeature([CourseEntity, OrganizationEntity, LevelEntity]),
     JwtModule.register(jwtConfig),
   ],
 })
-export class CoursesModule {}
+export class CoursesModule { }

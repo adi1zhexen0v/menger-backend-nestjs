@@ -14,9 +14,8 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { StudentGuard } from 'src/guards/student.guard';
 import { JwtToken } from 'src/common/decorators/jwt-token.decorator';
 import { CreateUserWithOrganizationDto } from './dto/create-user-with-organization.dto';
-import { Admin } from 'typeorm';
-import { AdminGuard } from 'src/guards/admin.guard';
 import { ManagerGuard } from 'src/guards/manager.guard';
+import { UpdatePointsDto } from './dto/update-points.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -27,6 +26,12 @@ export class UsersController {
   @Get()
   getMe(@JwtToken() token: string) {
     return this.usersService.getMe(token);
+  }
+
+  @ApiBearerAuth()
+  @Post('/points')
+  updatePoints(@Body() dto: UpdatePointsDto) {
+    return this.usersService.updatePoints(dto.id, dto.points);
   }
 
   @ApiBearerAuth()

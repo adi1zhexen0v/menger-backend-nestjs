@@ -25,7 +25,10 @@ export class CoursesService {
 
 
   findById(id: number) {
-    return this.repository.findOneBy({ id });
+    return this.repository.createQueryBuilder('course')
+      .leftJoinAndSelect('course.levels', 'level')
+      .where('course.id = :id', { id })
+      .getOne();
   }
 
   update(id: number, dto: CreateOrUpdateCourseDto) {

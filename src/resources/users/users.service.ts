@@ -29,6 +29,17 @@ export class UsersService {
     return this.repository.findOne({ where: { id: decoded.id } });
   }
 
+  async updatePoints(userId: number, pointsToAdd: number) {
+    const user = await this.repository.findOneBy({ id: userId });
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    user.points += pointsToAdd;
+    await this.repository.save(user);
+    return user;
+  }
+
   activateUser(id: number) {
     return this.repository.update(id, { isActivated: true });
   }

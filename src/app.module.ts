@@ -8,6 +8,7 @@ import { ApplicationsModule } from './resources/applications/applications.module
 import { ActivationCodeModule } from './resources/activation-code/activation-code.module';
 import { FeedbackModule } from './resources/feedback/feedback.module';
 import { OrganizationsModule } from './resources/organizations/organizations.module';
+import { LevelModule } from './resources/level/level.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { OrganizationsModule } from './resources/organizations/organizations.mod
     ActivationCodeModule,
     FeedbackModule,
     OrganizationsModule,
+    LevelModule,
   ],
   controllers: [],
 })
