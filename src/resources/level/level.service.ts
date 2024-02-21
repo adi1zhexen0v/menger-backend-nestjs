@@ -18,4 +18,17 @@ export class LevelService {
   update(id: number, dto: CreateLevelDto) {
     return this.repository.update(id, dto);
   }
+
+  async getLevelDetails(levelId: number) {
+    const level = await this.repository.findOne({
+      where: { id: levelId },
+      relations: ['tasks', 'contents', 'words'],
+    });
+
+    if (!level) {
+      throw new Error('Level not found');
+    }
+
+    return level;
+  }
 }

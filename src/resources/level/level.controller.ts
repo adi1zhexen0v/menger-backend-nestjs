@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Post, Body, Patch, Param, Get } from '@nestjs/common';
 import { LevelService } from './level.service';
 import { CreateLevelDto } from './dto/create-level.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -16,5 +16,10 @@ export class LevelController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() dto: CreateLevelDto) {
     return this.levelService.update(+id, dto);
+  }
+
+  @Get(':id')
+  getLevelDetails(@Param('id') id: string) {
+    return this.levelService.getLevelDetails(+id);
   }
 }

@@ -1,5 +1,7 @@
 import { ActivationCodeEntity } from 'src/resources/activation-code/entities/activation-code.entity';
+import { CourseEntity } from 'src/resources/courses/entities/course.entity';
 import { OrganizationEntity } from 'src/resources/organizations/entities/organization.entity';
+import { UserCourseEntity } from 'src/resources/user-course/entities/user-course.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,6 +9,8 @@ import {
   CreateDateColumn,
   OneToOne,
   ManyToOne,
+  JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity({ name: 'users' })
@@ -49,4 +53,7 @@ export class UserEntity {
 
   @ManyToOne(() => OrganizationEntity, organization => organization.users)
   organization: OrganizationEntity;
+
+  @OneToMany(() => UserCourseEntity, userCourse => userCourse.user)
+  userCourses: UserCourseEntity[];
 }

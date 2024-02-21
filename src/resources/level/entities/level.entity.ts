@@ -1,13 +1,13 @@
-import { ActivationCodeEntity } from 'src/resources/activation-code/entities/activation-code.entity';
+import { ContentEntity } from 'src/resources/content/entities/content.entity';
 import { CourseEntity } from 'src/resources/courses/entities/course.entity';
-import { OrganizationEntity } from 'src/resources/organizations/entities/organization.entity';
+import { TaskEntity } from 'src/resources/task/entities/task.entity';
+import { WordEntity } from 'src/resources/word/entities/word.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
-  OneToOne,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 @Entity({ name: 'levels' })
@@ -23,4 +23,13 @@ export class LevelEntity {
 
   @ManyToOne(() => CourseEntity, course => course.levels)
   course: CourseEntity;
+
+  @OneToMany(() => WordEntity, word => word.level)
+  words: WordEntity[];
+
+  @OneToMany(() => ContentEntity, content => content.level)
+  contents: ContentEntity[];
+
+  @OneToMany(() => TaskEntity, task => task.level)
+  tasks: TaskEntity[];
 }

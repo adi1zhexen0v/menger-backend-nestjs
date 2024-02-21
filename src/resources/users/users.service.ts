@@ -26,7 +26,12 @@ export class UsersService {
 
   getMe(token: string) {
     const decoded = this.jwtService.decode(token);
-    return this.repository.findOne({ where: { id: decoded.id } });
+    return this.repository.createQueryBuilder('user')
+      .leftJoinAndSelect('user.organization', 'organization')
+      .leftJoinAndSelect('user.userCourses', 'userCourse')
+      .leftJoinAndSelect('userCourse.course', 'course')
+      .where('user.id = :userId', { userId: decoded.id })
+      .getOne();
   }
 
   async updatePoints(userId: number, pointsToAdd: number) {

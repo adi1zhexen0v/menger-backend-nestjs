@@ -7,11 +7,12 @@ import { ActivationCodeEntity } from '../activation-code/entities/activation-cod
 import { OrganizationEntity } from '../organizations/entities/organization.entity';
 import { MailService } from 'src/services/mail.service';
 import { OrganizationsModule } from '../organizations/organizations.module';
+import { UserCourseEntity } from '../user-course/entities/user-course.entity';
 
 @Module({
   controllers: [UsersController],
   providers: [UsersService, MailService],
-  imports: [TypeOrmModule.forFeature([UserEntity, ActivationCodeEntity, OrganizationEntity]), OrganizationsModule],
+  imports: [TypeOrmModule.forFeature([UserEntity, ActivationCodeEntity, OrganizationEntity, UserCourseEntity]), OrganizationsModule],
   exports: [UsersService],
 })
 export class UsersModule { }

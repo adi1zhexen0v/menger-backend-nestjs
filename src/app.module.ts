@@ -9,6 +9,10 @@ import { ActivationCodeModule } from './resources/activation-code/activation-cod
 import { FeedbackModule } from './resources/feedback/feedback.module';
 import { OrganizationsModule } from './resources/organizations/organizations.module';
 import { LevelModule } from './resources/level/level.module';
+import { WordModule } from './resources/word/word.module';
+import { ContentModule } from './resources/content/content.module';
+import { TaskModule } from './resources/task/task.module';
+import { UserCourseModule } from './resources/user-course/user-course.module';
 
 @Module({
   imports: [
@@ -22,6 +26,10 @@ import { LevelModule } from './resources/level/level.module';
     FeedbackModule,
     OrganizationsModule,
     LevelModule,
+    WordModule,
+    ContentModule,
+    TaskModule,
+    UserCourseModule,
   ],
   controllers: [],
 })
