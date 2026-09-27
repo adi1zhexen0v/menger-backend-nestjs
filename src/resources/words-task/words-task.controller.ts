@@ -27,16 +27,16 @@ export class WordsTaskController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.wordsTaskService.findOne(+id);
+    return this.wordsTaskService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateWordsTaskDto: UpdateWordsTaskDto) {
-    return this.wordsTaskService.update(+id, updateWordsTaskDto);
+    return this.wordsTaskService.update(id, updateWordsTaskDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.wordsTaskService.remove(+id);
+    return this.wordsTaskService.remove(id);
   }
 }

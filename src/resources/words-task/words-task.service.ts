@@ -21,19 +21,19 @@ export class WordsTaskService {
     return await this.wordsTaskModel.findByIdAndUpdate(newWordsTask._id, { courseId: level.courseId }, { new: true });
   }
 
-  findAll() {
-    return `This action returns all wordsTask`;
+  async findAll() {
+    return await this.wordsTaskModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} wordsTask`;
+  async findOne(id: string) {
+    return await this.wordsTaskModel.findById(id);
   }
 
-  update(id: number, updateWordsTaskDto: UpdateWordsTaskDto) {
-    return `This action updates a #${id} wordsTask`;
+  async update(id: string, dto: UpdateWordsTaskDto) {
+    return await this.wordsTaskModel.findByIdAndUpdate(id, dto, { new: true });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} wordsTask`;
+  async remove(id: string) {
+    return await this.wordsTaskModel.findByIdAndDelete(id);
   }
 }
